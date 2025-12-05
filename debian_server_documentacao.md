@@ -57,12 +57,12 @@
 
 Durante a instalação, na etapa **Seleção de software**, foram feitas as seguintes escolhas para garantir um ambiente de servidor puro, sem interface gráfica:
 
-### ✔️ Mantido
+###  Mantido
 
 - **Servidor SSH**
 - **Utilitários de sistema padrão**
 
-### ❌ Desmarcado
+###  Desmarcado
 
 - Ambiente de área de trabalho do Debian
 - GNOME
@@ -85,15 +85,15 @@ Durante a instalação, na etapa **Seleção de software**, foram feitas as segu
 
 Durante os testes de conectividade entre a máquina host (Windows) e a VM Debian em modo Bridge, foi identificado o seguinte comportamento:
 
-### ✔️ Windows → Debian: Ping funcionando
+### Windows → Debian: Ping funcionando
 
 O Windows consegue alcançar o servidor Debian corretamente.
 
-### ❌ Debian → Windows: Ping bloqueado
+###  Debian → Windows: Ping bloqueado
 
 O Debian não conseguia pingar o Windows. Isso **não era falha no servidor Debian**, e sim no **firewall do Windows**, que bloqueia ICMP por padrão.
 
-### 🔧 Solução aplicada
+###  Solução aplicada
 
 Foi necessário habilitar o recebimento de ping (ICMP Echo Request) no Firewall do Windows:
 
@@ -104,7 +104,7 @@ Foi necessário habilitar o recebimento de ping (ICMP Echo Request) no Firewall 
    - Ou **Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)**
 4. Após habilitar, o ping Debian → Windows passou a funcionar.
 
-### 🔧 Alternativa via CMD (habilitar ICMP)
+###  Alternativa via CMD (habilitar ICMP)
 
 ```
 netsh advfirewall firewall add rule name="ICMP Allow" protocol=icmpv4:any,any dir=in action=allow
@@ -298,10 +298,10 @@ Error loading config (--config.file=/etc/prometheus/prometheus.yml)
 yaml: line 35: could not find expected ':'
 ```
 
-#### 🔍 Causa
+####  Causa
 Indentação incorreta ou linhas mal formatadas no bloco `scrape_configs`.
 
-#### 🛠 Solução
+####  Solução
 1. Verificar linhas problemáticas:
 ```
 nl -ba /etc/prometheus/prometheus.yml | sed -n '1,120p'
@@ -338,10 +338,10 @@ Erro ao reiniciar:
 Unknown section 'install'
 ```
 
-#### 🔍 Causa
+####  Causa
 O bloco `[Install]` estava escrito incorretamente.
 
-#### 🛠 Solução
+####  Solução
 Editar o serviço:
 ```
 sudo nano /etc/systemd/system/prometheus.service
@@ -407,6 +407,6 @@ Tudo funcionando perfeitamente.
 
 ---
 
-### ✔️ Conclusão
+###  Conclusão
 A instalação do **Prometheus + Node Exporter + Grafana no Debian Server** foi concluída com sucesso.
 O ambiente agora monitora recursos do sistema em tempo real e está pronto para expansão futura.
