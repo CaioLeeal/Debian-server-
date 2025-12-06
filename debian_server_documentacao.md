@@ -51,7 +51,6 @@
   - O tempo de boot e instalação pode ser mais lento.
   - Para uso em servidor, um SSD é recomendado futuramente para melhorar desempenho.
 
-(Adicionar conteúdo conforme você avançar na instalação.)
 
 ## 6. Configuração de Software (Seleção de Pacotes)
 
@@ -115,14 +114,59 @@ netsh advfirewall firewall add rule name="ICMP Allow" protocol=icmpv4:any,any di
 - A comunicação bidirecional entre Windows ↔ Debian foi restaurada.
 - Confirmação de que a rede Bridge e o adaptador **Intel PRO/1000 MT** estão funcionando corretamente no VirtualBox. (Adicionar conteúdo mais tarde.)
 
-## 8. Instalação do Sistema Base
+8. Instalação do Sistema Base
 
-(Adicionar conteúdo conforme for instalado.)
+Após a finalização da instalação do Debian Server, foram realizadas as seguintes etapas iniciais para preparar o sistema para uso em ambiente de servidor:
 
-## 8. Instalação de Serviços (SSH, Web, Firewall, etc)
+8.1 Atualização do sistema
 
-(Registrar o que for instalado.)
+Atualização dos pacotes e repositórios:
+```
+apt update && apt upgrade -y
+```
+8.2 Instalação de pacotes essenciais
 
+Foram instalados pacotes básicos para administração do sistema:
+```
+apt install sudo net-tools ca-certificates curl wget coreutils -y
+```
+
+Pacotes instalados:
+
+sudo → elevação de privilégios
+
+net-tools → ifconfig, netstat
+
+ca-certificates → suporte a HTTPS
+
+curl e wget → downloads e testes de API
+
+coreutils → comandos essenciais do sistema
+
+8.3 Configuração de usuário administrador
+
+Adição do usuário caioleal ao grupo sudo:
+```
+usermod -aG sudo caioleal
+```
+
+Troca para o usuário padrão:
+
+```
+su - caioleal
+```
+
+8.4 Verificação de rede
+
+Testes de conectividade realizados com:
+
+```
+ping google.com
+ip a
+ifconfig
+```
+
+A VM foi configurada em modo Bridge, recebendo IP válido da rede local.
 ---
 
 ## 9. Configuração do Compartilhamento de Arquivos (Samba)
@@ -285,11 +329,11 @@ Após correção dos repositórios e adição correta das chaves GPG, o sistema 
 
 ---
 
-## 10. Correção de Erros do Prometheus (Configuração e Systemd)
+## 11. Correção de Erros do Prometheus (Configuração e Systemd)
 
 Durante a configuração do Prometheus e integração com o Node Exporter no **Debian Server**, alguns erros foram encontrados e resolvidos. Abaixo está o registro detalhado do processo para referência futura.
 
-### 10.1 Erro de sintaxe no arquivo `/etc/prometheus/prometheus.yml`
+### 11.1 Erro de sintaxe no arquivo `/etc/prometheus/prometheus.yml`
 
 Ao reiniciar o Prometheus, o erro abaixo apareceu:
 
@@ -389,7 +433,7 @@ Resultado esperado:
 
 ---
 
-### 10.4 Integração com Grafana
+### 11.4 Integração com Grafana
 
 Após tudo configurado no **Debian Server**, o Grafana reconheceu corretamente:
 - Fonte de dados Prometheus
